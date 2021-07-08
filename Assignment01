@@ -1,0 +1,86 @@
+; multi-segment executable file template.
+
+data segment
+    ; add your data here!
+    pkey db "done assignment...$"
+ends
+
+stack segment
+    dw   128  dup(0)
+ends
+
+code segment
+start:
+; set segment registers:
+    mov ax, data
+    mov ds, ax
+    mov es, ax
+
+
+    ; add your code here
+    
+    ;Task1 Swap two numbers using ADD/SUB instructions only. 
+   mov ax , 20      ;a=20,b=33
+   mov bx , 33
+   add ax, bx       ;a=a+b=53
+   neg bx           ;b=-b=-33
+   add bx, ax       ;b=b+a=-33+53=20
+   sub ax , bx      ;a=a-b=53-20=33
+    
+    
+    ;Task2 If A,B and C are 3 variables,perform this given mathematical operaton A=B-(A+C)
+        
+   mov ax , 2        ;a=2
+   mov bx , 7        ;b=7                          
+   mov cx , 3        ;c=3
+   add ax , cx       ;a=a+c=2+3=5
+                      
+   sub bx ,ax        ;b=b-(a+c)=7-5=2
+    
+   mov ax, bx        ;a=b
+   
+    
+   
+   
+   ;Task3 If X,Y,Z are 3 variables,perform this given mathematical operaton X/Y*Z
+   
+   mov ax , 6        ;x=6
+   mov bx , 2        ;y=2
+   mul bx            ;x*y
+   mov cx , 3        ;z=3
+    
+   div cx            ;6/3
+          
+   ;Task4 Perform (5+2)*(3+1)/5+2+2-(6*3) 
+   mov ax ,5
+   add ax,2
+   mov bx, 3
+   add bx,1
+   mul bx 
+   mov cx,5 
+   div cx 
+   add ax,2
+   add ax,2
+   mov cx,ax
+   mov ax,6
+   mov bx,3
+   mul bx
+   sub cx,ax
+   
+   
+   
+   
+            
+    lea dx,  pkey
+    mov ah, 9
+    int 21h        ; output string at ds:dx
+    
+    ; wait for any key....    
+    mov ah, 1
+    int 21h
+    
+    mov ax, 4c00h ; exit to operating system.
+    int 21h    
+ends
+
+end start ; set entry point and stop the assembler.
